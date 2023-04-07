@@ -98,14 +98,20 @@ public class RectangleTest {
 
     // Test whether the copy constructor of Point works correctly
     public void testPointCopyConstructor() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        Point p1 = new Point(2, 3);
-        Point p2 = new Point(p1);
-        Method getX = Point.class.getDeclaredMethod("getX");
-        Method getY = Point.class.getDeclaredMethod("getY");
-        getX.setAccessible(true);
-        getY.setAccessible(true);
-        assertEquals(2, (int) getX.invoke(p2));
-        assertEquals(3, (int) getY.invoke(p2));
+        try {
+            Constructor<Point> constructor = Point.class.getDeclaredConstructor(int.class, int.class);
+            constructor.setAccessible(true);
+            Point p1 = constructor.newInstance(2, 3);
+            Point p2 = new Point(p1);
+            Method getX = Point.class.getDeclaredMethod("getX");
+            Method getY = Point.class.getDeclaredMethod("getY");
+            getX.setAccessible(true);
+            getY.setAccessible(true);
+            assertEquals(2, (int) getX.invoke(p2));
+            assertEquals(3, (int) getY.invoke(p2));
+        } catch (Exception e) {
+            fail("Failed to create point using copy constructor");
+        }
     }
 
 }

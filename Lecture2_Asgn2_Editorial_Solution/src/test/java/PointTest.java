@@ -104,10 +104,10 @@ public class PointTest {
     @Test
     public void testCopyConstructor() {
         try {
-            Point p1 = new Point(3, 4);
-            Class<?> c = Point.class;
-            Constructor<?> cons = c.getConstructor(Point.class);
-            Point p2 = (Point) cons.newInstance(p1);
+            Constructor<Point> cons = Point.class.getDeclaredConstructor(int.class, int.class);
+            Point p1 = cons.newInstance(3, 4);
+            cons = Point.class.getDeclaredConstructor(Point.class);
+            Point p2 = cons.newInstance(p1);
             assertNotSame(p1, p2);
             assertEquals(p1.x, p2.x);
             assertEquals(p1.y, p2.y);
@@ -115,5 +115,6 @@ public class PointTest {
             fail("Failed to create point using copy constructor");
         }
     }
+
 
 }

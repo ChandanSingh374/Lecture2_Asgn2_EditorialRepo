@@ -279,4 +279,78 @@ public class RectangleTest {
     }
 
 
+//    @Test
+//    public void testRectangleConstructorWith4Parameters() throws Exception {
+//        Constructor<Rectangle> constructor = Rectangle.class.getDeclaredConstructor(int.class, int.class, int.class, int.class);
+//        assertFalse(Modifier.isPrivate(constructor.getModifiers()));
+//
+//        int topLeftX = 2;
+//        int topLeftY = 3;
+//        int bottomRightX = 4;
+//        int bottomRightY = 5;
+//
+//        Rectangle r1 = constructor.newInstance(topLeftX, topLeftY, bottomRightX, bottomRightY);
+//
+//        Field fieldTopLeft = Rectangle.class.getDeclaredField("topLeft");
+//        fieldTopLeft.setAccessible(true);
+//        Object topLeftObj = fieldTopLeft.get(r1);
+//        Field xField = Point.class.getDeclaredField("x");
+//        Field yField = Point.class.getDeclaredField("y");
+//        xField.setAccessible(true);
+//        yField.setAccessible(true);
+//        int actualTopLeftX = (int) xField.get(topLeftObj);
+//        int actualTopLeftY = (int) yField.get(topLeftObj);
+//
+//        Field fieldBottomRight = Rectangle.class.getDeclaredField("bottomRight");
+//        fieldBottomRight.setAccessible(true);
+//        Object bottomRightObj = fieldBottomRight.get(r1);
+//        int actualBottomRightX = (int) xField.get(bottomRightObj);
+//        int actualBottomRightY = (int) yField.get(bottomRightObj);
+//
+//        assertEquals(topLeftX, actualTopLeftX);
+//        assertEquals(topLeftY, actualTopLeftY);
+//        assertEquals(bottomRightX, actualBottomRightX);
+//        assertEquals(bottomRightY, actualBottomRightY);
+//
+//        // Check that deep copy is maintained
+//        Object newTopLeftObj = fieldTopLeft.get(r1);
+//        Object newBottomRightObj = fieldBottomRight.get(r1);
+//        assertFalse(topLeftObj == newTopLeftObj);
+//        assertFalse(bottomRightObj == newBottomRightObj);
+//    }
+@Test
+public void testRectangleConstructorWith4Parameters() throws Exception {
+    Constructor<Rectangle> constructor = Rectangle.class.getDeclaredConstructor(int.class, int.class, int.class, int.class);
+    assertFalse(Modifier.isPrivate(constructor.getModifiers()));
+
+    int topLeftX = 2;
+    int topLeftY = 3;
+    int bottomRightX = 4;
+    int bottomRightY = 5;
+
+    Object topLeftObj = createPointObject(topLeftX, topLeftY);
+    Object bottomRightObj = createPointObject(bottomRightX, bottomRightY);
+
+    Rectangle r1 = constructor.newInstance(topLeftX, topLeftY, bottomRightX, bottomRightY);
+
+    Field fieldTopLeft = Rectangle.class.getDeclaredField("topLeft");
+    fieldTopLeft.setAccessible(true);
+    Object topLeftCopy = fieldTopLeft.get(r1);
+
+    Field fieldBottomRight = Rectangle.class.getDeclaredField("bottomRight");
+    fieldBottomRight.setAccessible(true);
+    Object bottomRightCopy = fieldBottomRight.get(r1);
+
+    assertFalse(topLeftObj == topLeftCopy); // checking deep copy
+    assertFalse(bottomRightObj == bottomRightCopy); // checking deep copy
+
+
+}
+    private Object createPointObject(int x, int y) throws Exception {
+        Class<?> pointClass = Class.forName("Point");
+        Constructor<?> constructor = pointClass.getDeclaredConstructor(int.class, int.class);
+        return constructor.newInstance(x, y);
+    }
+
+
 }

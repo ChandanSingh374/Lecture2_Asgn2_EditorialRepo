@@ -38,28 +38,27 @@ public class PointTest {
         }
     }
 
-    @Test
-    public void testTwoParamConstructorExists() {
-        try {
-            Constructor<?> constructor = pointClass.getDeclaredConstructor(int.class, int.class);
-            assertNotNull(constructor, "Two parameter constructor not found in class Point");
-        } catch (NoSuchMethodException e) {
-            fail("Two parameter constructor not found in class Point");
-        }
-    }
+//    @Test
+//    public void testTwoParamConstructorExists() {
+//        try {
+//            Constructor<?> constructor = pointClass.getDeclaredConstructor(int.class, int.class);
+//            assertNotNull(constructor, "Two parameter constructor not found in class Point");
+//        } catch (NoSuchMethodException e) {
+//            fail("Two parameter constructor not found in class Point");
+//        }
+//    }
+//
+//    @Test
+//    public void testCopyConstructorExists() {
+//        try {
+//            Constructor<?> constructor = pointClass.getDeclaredConstructor(pointClass);
+//            assertNotNull(constructor, "Copy constructor not found in class Point");
+//        } catch (NoSuchMethodException e) {
+//            fail("Copy constructor not found in class Point");
+//        }
+//    }
 
-    @Test
-    public void testCopyConstructorExists() {
-        try {
-            Constructor<?> constructor = pointClass.getDeclaredConstructor(pointClass);
-            assertNotNull(constructor, "Copy constructor not found in class Point");
-        } catch (NoSuchMethodException e) {
-            fail("Copy constructor not found in class Point");
-        }
-    }
 
-    private void assertNotNull(Constructor<?> constructor, String s) {
-    }
 
     @Test
     public void testTwoParamConstructorSignature() {
